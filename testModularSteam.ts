@@ -19,9 +19,6 @@ async function testGetGames(searchTerm: string): Promise<void> {
       console.log(`AppID: ${game.appid}`);
       console.log(`Release: ${game.release}`);
       console.log(`Price: ${game.price}`);
-      if (game.rating) {
-        console.log(`Rating: ${game.rating} (${game.reviewCount} reviews)`);
-      }
     });
   } catch (error) {
     if (error instanceof Steam.SteamScraperError) {

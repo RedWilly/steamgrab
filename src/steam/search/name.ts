@@ -57,27 +57,7 @@ export async function getGames(query: string, limit: number = DEFAULT_SEARCH_LIM
           }
         }
       }
-      
-      // Extract rating information
-      const ratingElement = $result.find(".search_review_summary");
-      let rating: string | undefined;
-      let reviewCount: number | undefined;
-      
-      if (ratingElement.length > 0) {
-        const ratingData = ratingElement.data("store-tooltip");
-        if (ratingData) {
-          const reviewMatch = String(ratingData).match(/(\d+)%/);
-          if (reviewMatch && reviewMatch[1]) {
-            rating = `${reviewMatch[1]}%`;
-          }
-          
-          const countMatch = String(ratingData).match(/of the (\d+,?\d*)/);
-          if (countMatch && countMatch[1]) {
-            reviewCount = parseInt(countMatch[1].replace(/,/g, ''), 10);
-          }
-        }
-      }
-      
+            
       // Extract price information - handle different price formats
       let price = $result.find(".search_price").text().trim();
       if (!price) {
@@ -93,9 +73,7 @@ export async function getGames(query: string, limit: number = DEFAULT_SEARCH_LIM
         release: $result.find(".search_released").text().trim(),
         price: price || 'Price not available',
         image: $result.find("img").attr('src'),
-        appid: appId,
-        rating,
-        reviewCount
+        appid: appId
       };
       
       games.push(game);

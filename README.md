@@ -119,8 +119,6 @@ interface GameInfo {
   price: string;
   image: string | undefined;
   appid: number | undefined;
-  rating?: string;
-  reviewCount?: number;
 }
 ```
 
