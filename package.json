@@ -1,5 +1,5 @@
 {
-  "name": "steam-game-scraper",
+  "name": "steamgrab",
   "version": "1.0.0",
   "description": "A TypeScript library for scraping game information from Steam",
   "main": "src/index.ts",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/steam-game-scraper.git"
+    "url": "https://github.com/RedWilly/steamgrab.git"
   },
   "dependencies": {
     "axios": "^1.6.7",

@@ -1,6 +1,6 @@
 /**
- * Steam scraper module index
- * Exports all Steam scraper functionality
+ * Steam scraper(steamgrab) module index
+ * Exports all steamgrab functionality
  */
 
 // Export types

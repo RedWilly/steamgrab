@@ -1,4 +1,4 @@
-# Steam Game Scraper
+# Steam Game Scraper (steamgrab)
 
 A TypeScript library for fetching game information from the Steam store. This library provides easy-to-use functions for searching games by name and retrieving detailed game information by Steam App ID.
 
@@ -14,9 +14,9 @@ A TypeScript library for fetching game information from the Steam store. This li
 ## Installation
 
 ```bash
-npm install steam-game-scraper
+npm install steamgrab
 # or
-yarn add steam-game-scraper
+yarn add steamgrab
 ```
 
 This package is distributed as TypeScript source files rather than compiled JavaScript, which provides several benefits:
@@ -32,7 +32,7 @@ Note that you'll need TypeScript ≥4.5.0 in your project to use this package.
 ### Searching for games
 
 ```typescript
-import { Steam } from 'steam-game-scraper';
+import { Steam } from 'steamgrab';
 
 async function searchGames() {
   try {
