@@ -17,6 +17,8 @@ A TypeScript library for fetching game information from the Steam store. This li
 npm install steamgrab
 # or
 yarn add steamgrab
+# or
+bun add steamgrab
 ```
 
 This package is distributed as TypeScript source files rather than compiled JavaScript, which provides several benefits:
@@ -58,7 +60,7 @@ searchGames();
 ### Getting game details by App ID
 
 ```typescript
-import { Steam } from 'steam-game-scraper';
+import { Steam } from 'steamgrab';
 
 async function getGameDetails(appId: number) {
   try {
@@ -126,8 +128,8 @@ interface GameInfo {
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/steam-game-scraper.git
-cd steam-game-scraper
+git clone https://github.com/RedWilly/steamgrab.git
+cd steamgrab
 
 # Install dependencies
 npm install
