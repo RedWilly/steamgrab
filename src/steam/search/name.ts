@@ -3,7 +3,7 @@
  * Handles searching for games using the Steam store search
  */
 import axios from 'axios';
-import * as cheerio from 'cheerio';
+import { parse } from 'node-html-parser';
 import { type GameInfo, SteamScraperError } from '../types';
 
 
@@ -26,11 +26,11 @@ export async function getGames(query: string, limit: number = DEFAULT_SEARCH_LIM
   try {
     const response = await axios.get(url);
     const html = response.data;
-    const $ = cheerio.load(html);
+    const root = parse(html);
     
     // The search results are in a different structure
     // Look for the search result rows with the class 'search_result_row'
-    const results = $(".search_result_row");
+    const results = root.querySelectorAll(".search_result_row");
     
     if (results.length === 0) {
       return [];
@@ -40,16 +40,19 @@ export async function getGames(query: string, limit: number = DEFAULT_SEARCH_LIM
     
     // Process up to 'limit' results
     for (let i = 0; i < Math.min(results.length, limit); i++) {
-      const $result = $(results[i]);
+      const result = results[i];
+      
+      // Skip if result is undefined
+      if (!result) continue;
       
       // Extract the app ID from the data attribute or from the href
       let appId: number | undefined;
-      const appidData = $result.data("ds-appid");
+      const appidData = result.getAttribute("data-ds-appid");
       if (appidData) {
         appId = Number(appidData);
       } else {
         // Try to extract from the href attribute
-        const href = $result.attr("href");
+        const href = result.getAttribute("href");
         if (href) {
           const match = href.match(/\/app\/(\d+)/);
           if (match && match[1]) {
@@ -59,20 +62,27 @@ export async function getGames(query: string, limit: number = DEFAULT_SEARCH_LIM
       }
             
       // Extract price information - handle different price formats
-      let price = $result.find(".search_price").text().trim();
+      const priceElement = result.querySelector(".search_price");
+      let price = priceElement ? priceElement.text.trim() : '';
+      
       if (!price) {
         // Try the discounted price if available
-        price = $result.find(".search_price_discount_combined").text().trim();
+        const discountElement = result.querySelector(".search_price_discount_combined");
+        price = discountElement ? discountElement.text.trim() : '';
       }
       
       // Clean up the price text
       price = price.replace(/\s+/g, ' ').trim();
       
+      const titleElement = result.querySelector(".title");
+      const releaseElement = result.querySelector(".search_released");
+      const imageElement = result.querySelector("img");
+      
       const game: GameInfo = {
-        title: $result.find(".title").text().trim(),
-        release: $result.find(".search_released").text().trim(),
+        title: titleElement ? titleElement.text.trim() : '',
+        release: releaseElement ? releaseElement.text.trim() : '',
         price: price || 'Price not available',
-        image: $result.find("img").attr('src'),
+        image: imageElement ? imageElement.getAttribute('src') : undefined,
         appid: appId
       };
       

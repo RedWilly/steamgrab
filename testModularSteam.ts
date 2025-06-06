@@ -62,7 +62,7 @@ async function runTests(): Promise<void> {
   await testGetGames('Portal');
   
   // Test getting a specific game by ID (Portal 2 = 620)
-  await testGetGameById(620);
+  await testGetGameById(1991820);//Drunken_FC
 
   
   // Test the deprecated but still functional getFirstGameInfo
